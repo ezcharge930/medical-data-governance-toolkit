@@ -1,0 +1,11 @@
+# JetBrains IDE 配置
+.idea/
+
+# Python 特定文件
+__pycache__/
+*.egg-info/
+*.pyc
+docs/肺癌专病模型说明书.xlsx
+venv/
+样例/*
+test/

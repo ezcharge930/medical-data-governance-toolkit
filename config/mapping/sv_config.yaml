@@ -1,0 +1,460 @@
+source:
+- table_name: 就诊信息
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_smc_setlcent_db_mdtrt_d
+  owner: 丁应龙
+- table_name: 病案信息
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_ipt_medcas_hmpg_ora_xml_merge
+  owner: 丁应龙
+- table_name: 医疗保障基金结算清单历史信息表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_smc_setlcent_db_mdcs_fund_setl_list_his_d
+  owner: 丁应龙
+- table_name: 结算诊断信息表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_smc_setlcent_db_setl_diag_list_d
+  owner: 丁应龙
+- table_name: 定点医药机构业务信息表
+  table_name_en: med_dict_v3.ods_mbs_hibiz_db_bj_fixmedins_b
+  owner: 丁应龙
+- table_name: 医疗机构信息表
+  table_name_en: med_dict_v3.ods_usc_custcent_db_medins_info_b
+  owner: 丁应龙
+fields:
+  subjid:
+    description: 患者id
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 就诊信息
+      source_field: empi
+      priority: 1
+    - source_table: 病案信息
+      source_field: empi
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: empi
+      priority: 1
+    - source_table: 结算诊断信息表
+      source_field: empi
+      priority: 1
+    special_rule: subjid
+  umrid:
+    description: 就诊id
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 就诊信息
+      source_field: mdtrt_id
+      priority: 1
+    - source_table: 病案信息
+      source_field: mdtrt_id
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: mdtrt_id
+      priority: 1
+    - source_table: 结算诊断信息表
+      source_field: mdtrt_id
+      priority: 1
+    special_rule: umrid
+  svdtc:
+    description: 就诊日期
+    data_type: 日期
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: adm_time
+      priority: 1
+    - source_table: 就诊信息
+      source_field: begntime
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: adm_time
+      priority: 1
+    special_rule: svdtc
+  svtype:
+    description: 就诊类型
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: 就诊信息
+      source_field: med_type
+      priority: 1
+    special_rule: null
+  svcat:
+    description: 就诊类型分类
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hospital:
+    description: 就诊机构名称
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: orgname
+      priority: 1
+    - source_table: 病案信息
+      source_field: fixmedins_name
+      priority: 1
+    - source_table: 就诊信息
+      source_field: fixmedins_name
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: fixmedins_name
+      priority: 1
+    - source_table: 定点医药机构业务信息表
+      source_field: fixmedins_name
+      priority: 1
+    - source_table: 医疗机构信息表
+      source_field: medins_name
+      priority: 1
+    special_rule: hospital
+  hospcode:
+    description: 就诊机构编码
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: orgcode
+      priority: 1
+    - source_table: 病案信息
+      source_field: fixmedins_code
+      priority: 1
+    - source_table: 就诊信息
+      source_field: fixmedins_code
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: fixmedins_code
+      priority: 1
+    - source_table: 定点医药机构业务信息表
+      source_field: fixmedins_code
+      priority: 1
+    - source_table: 医疗机构信息表
+      source_field: medins_code
+      priority: 1
+    special_rule: hospcode
+  hospitalsd:
+    description: 就诊机构名称-归一
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hospcodesd:
+    description: 就诊机构编码
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hocat:
+    description: 医疗机构类型
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hocatcd:
+    description: 医疗机构类型编码
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hoscat:
+    description: 医疗机构类型-亚类
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  homcat:
+    description: 医疗机构类型-大类
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hosvcat:
+    description: 医疗机构服务类型
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hocode:
+    description: 就诊机构划区编码
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hodvnam:
+    description: 就诊机构划区名称
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hoprov:
+    description: 就诊机构-省
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hocity:
+    description: 就诊机构-市/区
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hograde:
+    description: 就诊机构等级
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  hogradesd:
+    description: 就诊机构等级-归一化
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  svyn:
+    description: 是否有住院信息
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  svpath:
+    description: 入院途径
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: adm_way_mc
+      priority: 1
+    special_rule: null
+  svstdtc:
+    description: 入院日期
+    data_type: 日期
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: adm_time
+      priority: 1
+    - source_table: 就诊信息
+      source_field: begntime
+      priority: 3
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: adm_time
+      priority: 2
+    special_rule: null
+  svendtc:
+    description: 出院日期
+    data_type: 日期
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: dscg_time
+      priority: 1
+    - source_table: 就诊信息
+      source_field: endtime
+      priority: 3
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: dscg_time
+      priority: 2
+    special_rule: null
+  ihdp:
+    description: 入院科室名称
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: adm_caty
+      priority: 1
+    - source_table: 就诊信息
+      source_field: adm_dept_name
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: adm_caty_mc
+      priority: 1
+    - source_table: 结算诊断信息表
+      source_field: diag_dept
+      priority: 1
+    special_rule: ihdp
+  ihdpstd:
+    description: 入院科室名称-归一
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  ihdpcd:
+    description: 入院科室编码
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: adm_dept_codg
+      priority: 1
+    - source_table: 就诊信息
+      source_field: adm_dept_codg
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: adm_caty
+      priority: 1
+    special_rule: ihdpcd
+  ihdpcdsd:
+    description: 入院科室编码-归一
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  ihdpcat:
+    description: 入院科室-大类
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  ohdp:
+    description: 出院科室名称
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: dscg_dept_name
+      priority: 1
+    - source_table: 就诊信息
+      source_field: dscg_dept_name
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: dscg_caty_mc
+      priority: 1
+    special_rule: ohdp
+  ohdpstd:
+    description: 出院科室名称-归一
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  ohdpcd:
+    description: 出院科室编码
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息
+      source_field: dscg_dept_codg
+      priority: 1
+    - source_table: 就诊信息
+      source_field: dscg_dept_codg
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: dscg_caty
+      priority: 1
+    special_rule: ohdpcd
+  ohdpcdsd:
+    description: 出院科室编码-归一
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+  ohdpcat:
+    description: 出院科室-大类
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: /
+      source_field: /
+      priority: /
+    special_rule: /
+special_rules:
+  subjid:
+  - subjid
+  umrid:
+  - umrid
+  svdtc:
+  - svdtc
+  /:
+  - svcat
+  - hospitalsd
+  - hospcodesd
+  - hocat
+  - hocatcd
+  - hoscat
+  - homcat
+  - hosvcat
+  - hocode
+  - hodvnam
+  - hoprov
+  - hocity
+  - hograde
+  - hogradesd
+  - svyn
+  - ihdpstd
+  - ihdpcdsd
+  - ihdpcat
+  - ohdpstd
+  - ohdpcdsd
+  - ohdpcat
+  hospital:
+  - hospital
+  hospcode:
+  - hospcode
+  ihdp:
+  - ihdp
+  ihdpcd:
+  - ihdpcd
+  ohdp:
+  - ohdp
+  ohdpcd:
+  - ohdpcd

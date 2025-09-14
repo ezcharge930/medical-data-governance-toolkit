@@ -1,0 +1,19 @@
+[build-system]
+requires = ['setuptools>=61.0', 'wheel']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'medical_data_governance'
+version = '1.0'
+description = '医保数据治理与处理工具'
+authors = [
+    {name = '丁应龙', email = 'dingyinglong930@163.com'}
+]
+requires-python = '>=3.11.9'
+dependencies = [
+    'pandas >= 2.3.2',
+    'numpy >= 1.26.4',
+    'openpyxl >= 3.1.5',
+    'pyyaml >= 6.0.2',
+    'mysql-connector-python >= 9.3.0'
+]

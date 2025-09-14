@@ -1,0 +1,329 @@
+source:
+- table_name: 病案信息表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_ipt_medcas_hmpg_ora_xml_merge
+  owner: 丁应龙
+- table_name: 结算信息表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_smc_setlcent_db_setl_d
+  owner: 丁应龙
+- table_name: 就诊信息表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_smc_setlcent_db_mdtrt_d
+  owner: 丁应龙
+- table_name: 医疗保障基金结算清单历史信息表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_smc_setlcent_db_mdcs_fund_setl_list_his_d
+  owner: 丁应龙
+- table_name: drg结算信息表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_mbs_hibiz_db_bj_drg_setl_d
+  owner: 丁应龙
+- table_name: 个人基本信息
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_mbs_hibiz_db_psn_basic_info
+  owner: 丁应龙
+- table_name: 门慢门特登记信息表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_mbs_hibiz_db_bj_opsp_reg_d
+  owner: 丁应龙
+- table_name: 生育津贴登记事件记录表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_mbs_hibiz_db_matn_alwn_reg_evt_c
+  owner: 丁应龙
+- table_name: 职工人员缴费明细表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_ivc_clctcent_db_staf_psn_clct_detl_d
+  owner: 丁应龙
+- table_name: 居民人员缴费明细表
+  table_name_en: dwd_lungcancer_v20250206.lungcancer_ivc_clctcent_db_rsdt_psn_clct_detl_d
+  owner: 丁应龙
+fields:
+  subjid:
+    description: 患者唯一id
+    data_type: string
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: empi
+      priority: 1
+    - source_table: 结算信息表
+      source_field: empi
+      priority: 1
+    - source_table: 就诊信息表
+      source_field: empi
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: empi
+      priority: 1
+    - source_table: drg结算信息表
+      source_field: empi
+      priority: 1
+    - source_table: 个人基本信息
+      source_field: empi
+      priority: 1
+    - source_table: 门慢门特登记信息表
+      source_field: empi
+      priority: 1
+    - source_table: 生育津贴登记事件记录表
+      source_field: empi
+      priority: 1
+    - source_table: 职工人员缴费明细表
+      source_field: empi
+      priority: 1
+    - source_table: 居民人员缴费明细表
+      source_field: empi
+      priority: 1
+    special_rule: subjid
+  brthdtc:
+    description: 患者的出生日期
+    data_type: 日期
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: brdy
+      priority: 1
+    - source_table: 结算信息表
+      source_field: brdy
+      priority: 1
+    - source_table: 就诊信息表
+      source_field: brdy
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: brdy
+      priority: 1
+    - source_table: drg结算信息表
+      source_field: brdy
+      priority: 1
+    - source_table: 个人基本信息
+      source_field: brdy
+      priority: 1
+    - source_table: 个人基本信息
+      source_field: file_brdy
+      priority: 1
+    - source_table: 门慢门特登记信息表
+      source_field: brdy
+      priority: 1
+    - source_table: 生育津贴登记事件记录表
+      source_field: brdy
+      priority: 1
+    special_rule: brthdtc
+  age:
+    description: 患者首次访视对应的就诊年龄
+    data_type: 数值
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: age
+      priority: 1
+    - source_table: 结算信息表
+      source_field: age
+      priority: 1
+    - source_table: 就诊信息表
+      source_field: age
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: age
+      priority: 1
+    - source_table: drg结算信息表
+      source_field: age
+      priority: 1
+    special_rule: age
+  sex:
+    description: 患者的性别
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: gend
+      priority: 1
+    - source_table: 结算信息表
+      source_field: gend
+      priority: 1
+    - source_table: 就诊信息表
+      source_field: gend
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: gend
+      priority: 1
+    - source_table: drg结算信息表
+      source_field: gend
+      priority: 1
+    - source_table: 个人基本信息
+      source_field: gend
+      priority: 1
+    - source_table: 门慢门特登记信息表
+      source_field: gend
+      priority: 1
+    - source_table: 生育津贴登记事件记录表
+      source_field: gend
+      priority: 1
+    special_rule: sex
+  nation:
+    description: 患者的国籍
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: ntly
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: ntly
+      priority: 2
+    special_rule: null
+  ethnic:
+    description: 患者的民族
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: naty
+      priority: 1
+    - source_table: 结算信息表
+      source_field: naty
+      priority: 1
+    - source_table: 就诊信息表
+      source_field: naty
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: naty
+      priority: 1
+    - source_table: drg结算信息表
+      source_field: naty
+      priority: 1
+    - source_table: 个人基本信息
+      source_field: naty
+      priority: 1
+    - source_table: 门慢门特登记信息表
+      source_field: naty
+      priority: 1
+    - source_table: 生育津贴登记事件记录表
+      source_field: naty
+      priority: 1
+    special_rule: ethnic
+  marital:
+    description: 患者的婚姻状态
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: mrg_stas
+      priority: 1
+    - source_table: 个人基本信息
+      source_field: mrg_stas
+      priority: 1
+    special_rule: marital
+  occupat:
+    description: 患者的职业
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: prfs_code
+      priority: 1
+    - source_table: 医疗保障基金结算清单历史信息表
+      source_field: prfs
+      priority: 1
+    special_rule: occupat
+  educ:
+    description: 患者的学历
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 个人基本信息
+      source_field: educ_mc
+      priority: 1
+    special_rule: null
+  province1:
+    description: 患者出生地所在的省份
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: birplc_prov
+      priority: 1
+    special_rule: null
+  city1:
+    description: 患者出生地所在的市
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: birplc_city
+      priority: 1
+    special_rule: null
+  county1:
+    description: 患者出生地所在的县
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: birplc_coty
+      priority: 1
+    special_rule: null
+  province2:
+    description: 患者户籍或籍贯地所在的省份
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: resd_addr_prov
+      priority: 1
+    - source_table: 病案信息表
+      source_field: napl_prov
+      priority: 2
+    special_rule: null
+  city2:
+    description: 患者户籍或籍贯地所在的市
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: resd_addr_city
+      priority: 1
+    - source_table: 病案信息表
+      source_field: napl_city
+      priority: 2
+    special_rule: null
+  county2:
+    description: 患者户籍或籍贯地所在的县
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: resd_addr_coty
+      priority: 1
+    special_rule: null
+  province3:
+    description: 患者现住址所在的省份
+    data_type: 单选
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: curr_addr_prov
+      priority: 1
+    special_rule: null
+  city3:
+    description: 患者现住址所在的市
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: curr_addr_city
+      priority: 1
+    special_rule: null
+  county3:
+    description: 患者现住址所在的县
+    data_type: 文本
+    is_must: 是
+    source_table:
+    - source_table: 病案信息表
+      source_field: curr_addr_coty
+      priority: 1
+    special_rule: null
+special_rules:
+  subjid:
+  - subjid
+  brthdtc:
+  - brthdtc
+  age:
+  - age
+  sex:
+  - sex
+  ethnic:
+  - ethnic
+  marital:
+  - marital
+  occupat:
+  - occupat
