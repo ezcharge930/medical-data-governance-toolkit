@@ -1,0 +1,119 @@
+digraph code_structure {
+    rankdir="LR"; // 让布局从左到右，更符合阅读习惯
+    node [shape=rect, style=filled, color=lightgrey]; // 默认节点样式
+    edge [arrowsize=0.7]; // 连接线箭头大小
+
+    // 模块节点（Swimlanes），用椭圆表示，颜色区分
+    node [shape=ellipse, color=skyblue];
+    run_dm_ds [label="run_dm_ds.py"];
+    proj_base_tool [label="proj_base_tool.py"];
+    widget [label="widget.py"];
+    ds_main [label="ds_main.py"];
+    init_py [label="__init__.py"];
+    process_py [label="process.py"];
+    run_py [label="run.py"];
+    core_task_module [label="def core_task"];
+    prepare_raw_data_module [label="def prepare_raw_data"];
+    arrange_out_df_module [label="def arrange_out_df"];
+    execute_import_module [label="def execute_raw_data_import_sqlite"];
+
+    // 函数节点（Functions），用矩形表示
+    node [shape=rect, color=lightpink];
+    // __init__.py
+    run_project [label="run_project"];
+
+    // ds_main.py
+    run_ds_process [label="run_ds_process"];
+
+    // run_dm_ds.py
+    core_task [label="core_task"];
+    run_dm_ds_func [label="run_dm_ds"];
+
+    // proj_base_tool.py
+    read_spec_df [label="read_spec_df"];
+    arrange_out_df [label="arrange_out_df"];
+    prepare_raw_data_func [label="prepare_raw_data"];
+    save_df_by_timestamp [label="save_df_by_timestamp"];
+    run_ds_multi_process [label="run_ds_multi_process"];
+    read_csv_to_pd [label="read_csv_to_pd"];
+    execute_raw_data_import_sqlite [label="execute_raw_data_import_sqlite"];
+
+    // widget.py
+    get_raw_data_path [label="get_raw_data_path"];
+    get_all_raw_data_paths [label="get_all_raw_data_paths"];
+
+    // def core_task
+    map_sex [label="map_sex"];
+    map_brthdtc [label="map_brthdtc"];
+    map_height_weight [label="map_height_weight"];
+    calculate_bmi [label="calculate_bmi"];
+    map_patient_data [label="map_patient_data"];
+
+    // def prepare_raw_data
+    prepare_random_sample [label="prepare_random_sample"];
+    read_raw_df [label="read_raw_df"];
+    cal_grp [label="cal_grp"];
+    cal_dic_grp [label="cal_dic_grp"];
+
+    // def arrange_out_df
+    cal_df_strip [label="cal_df_strip"];
+
+    // def execute_raw_data_import_sqlite
+    create_model_class [label="create_model_class"];
+
+    // run.py
+    command_line [label="command_line"];
+    name_main [label="if __name__ == '__main__'"];
+
+    // process.py
+    main [label="main"];
+
+    // 模块与函数的包含关系（可选，用虚线表示）
+    edge [style=dashed, arrowhead=empty, color=gray];
+    run_dm_ds -> {core_task run_dm_ds_func};
+    proj_base_tool -> {read_spec_df arrange_out_df prepare_raw_data_func save_df_by_timestamp run_ds_multi_process read_csv_to_pd execute_raw_data_import_sqlite};
+    widget -> {get_raw_data_path get_all_raw_data_paths};
+    ds_main -> run_ds_process;
+    init_py -> run_project;
+    process_py -> main;
+    run_py -> {command_line name_main};
+    core_task_module -> {map_sex map_brthdtc map_height_weight calculate_bmi map_patient_data};
+    prepare_raw_data_module -> {prepare_random_sample read_raw_df cal_grp cal_dic_grp};
+    arrange_out_df_module -> cal_df_strip;
+    execute_import_module -> create_model_class;
+
+    // 核心执行流程
+    edge [style=solid, arrowhead=normal, color=black];
+    name_main -> main;
+    main -> run_project;
+    run_project -> execute_raw_data_import_sqlite [xlabel="-s参数"];
+    run_project -> run_ds_process [xlabel="默认"];
+    run_ds_process -> run_dm_ds_func;
+    run_dm_ds_func -> core_task;
+    run_dm_ds_func -> prepare_raw_data_func;
+
+    // 重要的函数调用关系
+    run_dm_ds_func -> save_df_by_timestamp;
+    run_dm_ds_func -> run_ds_multi_process;
+    prepare_raw_data_func -> get_raw_data_path;
+    read_spec_df -> get_raw_data_path;
+    save_df_by_timestamp -> get_raw_data_path;
+    run_ds_multi_process -> read_csv_to_pd;
+    execute_raw_data_import_sqlite -> create_model_class;
+    create_model_class -> get_raw_data_path;
+    create_model_class -> get_all_raw_data_paths;
+
+    // 同一模块内函数的调用
+    edge [color=blue];
+    map_patient_data -> calculate_bmi;
+    read_raw_df -> cal_grp;
+    cal_dic_grp -> read_raw_df;
+
+    // 给主要流程分组，优化布局
+    subgraph cluster_main_flow {
+        label = "核心执行流程";
+        color=lightblue;
+        style=filled;
+        run_project -> run_ds_process -> run_dm_ds_func;
+    }
+}
