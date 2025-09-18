@@ -1,0 +1,77 @@
+<mxfile>
+  <diagram name="function-dependency">
+    <mxGraphModel>
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Nodes -->
+        <mxCell id="run_main" value="if __name__ == '__main__'" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="10" y="10" width="160" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="proc_main" value="def main" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="10" y="70" width="120" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="init_run" value="def run_project" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="10" y="120" width="120" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ds_run" value="def run_ds_process" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="10" y="170" width="140" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="run_dm" value="def run_dm_ds" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="10" y="220" width="120" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="core_task" value="def core_task" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="150" y="260" width="120" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="prep_raw" value="def prepare_raw_data" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="150" y="310" width="140" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="get_path" value="def get_raw_data_path" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="150" width="150" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" source="run_main" target="proc_main" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e2" source="proc_main" target="init_run" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e3" source="init_run" target="ds_run" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e4" source="ds_run" target="run_dm" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e5" source="run_dm" target="core_task" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e6" source="run_dm" target="prep_raw" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e7" source="prep_raw" target="get_path" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e8" source="core_task" target="get_path" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

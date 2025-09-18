@@ -1,0 +1,108 @@
+digraph G {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor="#f0f8ff", fontname="Consolas"];
+
+    // Modules as subgraphs
+    subgraph cluster_run {
+        label = "run.py";
+        run_main [label="if __name__ == '__main__'"];
+        run_command [label="def command_line"];
+    }
+
+    subgraph cluster_process {
+        label = "process.py";
+        proc_main [label="def main"];
+    }
+
+    subgraph cluster_init {
+        label = "__init__.py";
+        init_run [label="def run_project"];
+    }
+
+    subgraph cluster_ds_main {
+        label = "ds_main.py";
+        ds_run [label="def run_ds_process"];
+    }
+
+    subgraph cluster_run_dm_ds {
+        label = "run_dm_ds.py";
+        run_dm [label="def run_dm_ds"];
+        core_task [label="def core_task"];
+    }
+
+    subgraph cluster_proj_base {
+        label = "proj_base_tool.py";
+        prep_raw [label="def prepare_raw_data"];
+        save_df [label="def save_df_by_timsstamp"];
+        read_spec [label="def read_spec_df"];
+        arrange_df [label="def arrange_out_df"];
+        multi_proc [label="def run_ds_mutli_process"];
+        proc_main_task [label="def process_main_task_for_ds"];
+        combine_ds [label="def combine_bath_ds"];
+        get_exe_ls [label="def get_exe_ls"];
+        get_config [label="def get_whole_config"];
+        exec_sqlite [label="def execute_raw_data_import_sqlite"];
+    }
+
+    subgraph cluster_widget {
+        label = "widget.py";
+        get_path [label="def get_raw_data_path"];
+        get_all_paths [label="def get_all_raw_data_paths"];
+    }
+
+    subgraph cluster_prepare_raw {
+        label = "prepare_raw_data";
+        read_raw_df [label="def read_raw_df"];
+        cal_grp [label="def cal_grp"];
+        cal_dic_grp [label="def cal_dic_grp"];
+    }
+
+    subgraph cluster_sqlite {
+        label = "execute_raw_data_import_sqlite";
+        create_model [label="def create_model_class"];
+    }
+
+    // Core call flow
+    run_main -> proc_main;
+    proc_main -> init_run;
+    init_run -> ds_run;
+    ds_run -> run_dm;
+
+    // Inside run_dm_ds
+    run_dm -> core_task;
+    run_dm -> prep_raw;
+    run_dm -> save_df;
+    run_dm -> multi_proc;
+
+    // Inside core_task (simplified)
+    core_task -> read_spec;
+    core_task -> arrange_df;
+
+    // prepare_raw_data internal
+    prep_raw -> read_raw_df;
+    read_raw_df -> cal_grp;
+    cal_grp -> cal_dic_grp;
+
+    // multi_proc flow
+    multi_proc -> proc_main_task;
+    multi_proc -> combine_ds;
+    multi_proc -> get_exe_ls;
+    multi_proc -> get_config;
+
+    // config calls sqlite import
+    get_config -> exec_sqlite;
+    exec_sqlite -> create_model;
+
+    // Many depend on widget
+    prep_raw -> get_path;
+    save_df -> get_path;
+    multi_proc -> get_path;
+    exec_sqlite -> get_path;
+    create_model -> get_all_paths;
+
+    // arrange_out_df used by core
+    arrange_df -> read_spec;
+
+    // Label edges
+    edge [fontsize=9, fontname="Arial"];
+}
