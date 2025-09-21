@@ -67,7 +67,12 @@
 #     # # 这里是args.project,project是自动生成的
 #     # print(f'待执行项目为:{args.project}')
 #     return parser.parse_args()
-
+import sys
+import os
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+    print(f"🔧 已强制修复路径: {project_root}")
 from structure.cli.runner import ApplicationRunner
 
 def main():

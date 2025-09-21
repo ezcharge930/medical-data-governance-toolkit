@@ -2,6 +2,8 @@
 import os
 import json
 from typing import Any
+import pandas as pd
+from .file_utils import FileUtils
 
 class ConfigUtils:
     def __init__(self) -> None:
@@ -76,7 +78,16 @@ class ConfigUtils:
         return {}
     
     @staticmethod
-    def get_exe_ls():
+    def get_exe_ls(config_file: str = 'whole_config.xlsx', target_sheet: str = '数据集执行控制') -> list[str]:
         ''' #NOTE 获取要执行的数据集列表'''
         # 这个可以读取另外一个配置文件,指定当前项目要执行哪些数据集
-        return None
+        fileutils = FileUtils()
+        spec_path: str = fileutils.get_raw_data_path(config_file= config_file, path= 'config')
+        spec_df = pd.read_excel(spec_path, dtype= object, sheet_name= target_sheet, keep_default_na= False)
+        spec_df.fillna('', inplace= True)
+        dataset_col = '数据集代号'
+        execute_flag_col = '是否执行'
+        if dataset_col not in spec_df.columns or execute_flag_col not in spec_df.columns:
+            raise ValueError(f'配置表 {target_sheet} 缺少必要列: {dataset_col} 或 {execute_flag_col}')
+        enabled_datasets: list = spec_df[spec_df[execute_flag_col] == 'y'][dataset_col].tolist()
+        return enabled_datasets

@@ -16,8 +16,8 @@ class ApplicationRunner:
             app = Application(args.project, ConfigUtils())
             
             # 根据参数执行不同的功能
-            self._execute_main_task(app, args= args)
-            self._execute_optional_tasks(app, args= args)
+            self._execute_main_task(app= app, args= args)
+            self._execute_optional_tasks(app= app, args= args)
             
             print('所有任务执行完成')
             
