@@ -1,10 +1,28 @@
 import pandas as pd 
 import os
 from typing import cast
-from ..utils.file_utils import FileUtils
-from ..utils.db_utils import DBUtils
-from ..utils.config_utils import ConfigUtils
+from structure.utils.file_utils import FileUtils
+from structure.utils.db_utils import DBUtils
+from typing import Protocol
+# from structure.utils.config_utils import ConfigUtils
 # from ..domain.dm import DM
+
+class DataReader(Protocol):
+    def read_raw_df(self, table: str, where: str, source_path: str) -> pd.DataFrame:
+        ...
+        
+    def read_spec_df(self) -> pd.DataFrame:
+        ...
+        
+    def prepare_raw_data(self, config_file: str | None = None) -> dict[str, pd.DataFrame]:
+        ...
+        
+    def fetch_norm_table(self, norm: pd.DataFrame) -> pd.DataFrame:
+        ...
+    
+    def fetch_dict_table(self, dict_df: pd.DataFrame) -> pd.DataFrame:
+        ...
+    
 
 class DataReady:
     def __init__(self, file_utils: FileUtils, db_utils: DBUtils, whole_config : dict | None = None) -> None:
