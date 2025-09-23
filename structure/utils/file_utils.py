@@ -3,7 +3,9 @@ import os
 class FileUtils:
     def __init__(self, project_name: str|None = None) -> None:
         self.project_name = project_name
+        # NOTE structure/utils
         self.current_dir = os.path.dirname(os.path.abspath(__file__))
+        # NOTE structure
         self.structure_dir = os.path.dirname(self.current_dir)
     
     # NOTE 目前的项目暂时不需要去运行多个项目,就先基于本项目目录开始
@@ -23,7 +25,7 @@ class FileUtils:
         print(f"DEBUG: structure_dir={self.structure_dir}")
         # 特殊处理config路径 - 指向stucture/config
         if path and 'config' in path.lower():
-            # 构建 stucture/config 路径
+            # NOTE 构建 stucture/config 路径
             config_dir = os.path.join(self.structure_dir, 'config')
         else:
             # 其他情况，基于stucture目录
@@ -41,6 +43,7 @@ class FileUtils:
         os.makedirs(config_dir, exist_ok=True)
         
         if config_file:
+            # NOTE structure/config/xxxxx
             datafile = os.path.join(config_dir, config_file)
         else:
             datafile = config_dir

@@ -1,13 +1,13 @@
 from structure.utils.file_utils import FileUtils
 from structure.utils.db_utils import DBUtils
-from structure.data.raw_data import DataReady
+from structure.data.raw_data import DataLoader
 from structure.domain.dm import DatasetHandler
 
 class DataProcessor:
-    def __init__(self, file_utils: FileUtils, db_utils: DBUtils, dataready:DataReady) -> None:
+    def __init__(self, file_utils: FileUtils, db_utils: DBUtils, dataloader:DataLoader) -> None:
         self.file_utils = file_utils
         self.db_utils = db_utils
-        self.dataready = dataready
+        self.dataloader = dataloader
         self._handler: dict[str, DatasetHandler] = {}
         
     def register_handler(self, handler: DatasetHandler):
@@ -29,7 +29,7 @@ class DataProcessor:
         
         try:
             print(f'开始处理 {dataset_name.upper()} 数据集')
-            handler.process(self.dataready)
+            handler.process(self.dataloader)
             self.save_result()
             print(f'{dataset_name.upper()} 处理完成')
         except Exception as e:

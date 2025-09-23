@@ -22,9 +22,15 @@ class DataReader(Protocol):
     
     def fetch_dict_table(self, dict_df: pd.DataFrame) -> pd.DataFrame:
         ...
+        
+    def read_raw_table(self, table_name: str, columns: list[str]) -> pd.DataFrame:
+        ...
+
+    def load_config(self, config_file: str) -> pd.DataFrame:
+        ...
     
 
-class DataReady:
+class DataLoader:
     def __init__(self, file_utils: FileUtils, db_utils: DBUtils, whole_config : dict | None = None) -> None:
         self.file_utils = file_utils
         self.db_utils = db_utils
@@ -99,11 +105,13 @@ class DataReady:
     def prepare_raw_data(self, config_file: str | None = None) -> dict[str, pd.DataFrame]:
         # NOTE 获取dm集配置文件所在地
         config_path = self.file_utils.get_raw_data_path(config_file= config_file, path= 'config')
+        # config_path = structure/config/dm_rawdata_config.xlsx
         config_df = pd.read_excel(config_path, dtype= object, keep_default_na= False).fillna('')
         # NOTE 对dm集配置文件中的字典表与其他表进行切分
         dict_df = config_df.loc[config_df['处理方式'] == '字典']
         norm_df = config_df.loc[config_df['处理方式'].isin(['常规', ''])]
         norm_series = norm_df.groupby(['程序中数据集ID']).apply(lambda x: self.fetch_norm_table(x))
+        # NOTE 程序中数据集ID = dm1、dm2、dm3
         # raw_data_dic: dict[str, pd.DataFrame] = {str(k): v for k, v in result_series.to_dict().items()}
         # raw_data_dic: dict[str, pd.DataFrame] = result_series.to_dict()
         # NOTE 之前一直报错的原因是pandas的to_dict()方法前面是泛型的，返回的是dict[Hashable, Any],检查器看到的Series.todict() -> dict[Hashable, Any]
@@ -118,3 +126,15 @@ class DataReady:
         
         return raw_data_dic
     
+    # 根据表名和列获取原始数据
+    def read_raw_table(self, table_name: str, columns: list[str]) -> pd.DataFrame:
+        ...
+    
+    # 读取配置文件
+    def load_config(self, config_file: str) -> pd.DataFrame:
+        # NOTE 获取dm集配置文件所在地
+        config_path = self.file_utils.get_raw_data_path(config_file= config_file, path= 'config')
+        # config_path = structure/config/dm_rawdata_config.xlsx
+        config_df = pd.read_excel(config_path, dtype= object, keep_default_na= False).fillna('')
+        return config_df
+      
