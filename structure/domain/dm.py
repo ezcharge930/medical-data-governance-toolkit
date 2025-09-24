@@ -44,7 +44,7 @@ class DM(DatasetHandler):
     
     def _process_core_table(self, raw_data: dict[str, pd.DataFrame], config_df: pd.DataFrame) -> pd.DataFrame:
         # final_dm_table
-        all_dfs = []
+        all_dfs: list = []
 
         for table_id in config_df['程序中数据集ID'].unique():
             if table_id not in raw_data:
@@ -91,10 +91,18 @@ class DM(DatasetHandler):
         return result
         
     def _map_sex(self, series: pd.Series) -> str:
-        ...
+        mode_values = series.mode()
+        if len(mode_values) == 1:
+            return mode_values.iloc[0]
+        else:
+            return ''
     
     def _map_brthdtc(self, series: pd.Series) -> str:
-        ...
+        mode_values = series.mode()
+        if len(mode_values) == 1:
+            return mode_values.iloc[0]
+        else:
+            return min(series)
         
     def _map_height_weight(self, series: pd.Series) -> float:
         ...

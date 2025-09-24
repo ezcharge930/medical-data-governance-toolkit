@@ -6,11 +6,12 @@ import pandas as pd
 from .file_utils import FileUtils
 
 class ConfigUtils:
-    def __init__(self) -> None:
+    def __init__(self, fileutils: FileUtils) -> None:
         self._config_dir = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
             'config'
         )
+        self.fileutils = fileutils
         
     def get_supported_dataset(self) -> list[str]:
         ''' #NOTE 获取支持的数据列表'''
@@ -72,17 +73,19 @@ class ConfigUtils:
         print(f'已创建默认数据集配置文件: {config_path}')
         
         
-    @staticmethod
-    def get_whole_config():
+    # @staticmethod
+    def get_whole_config(self, config_file: str = 'whole_config.xlsx') -> dict:
         ''' #NOTE 获取完整配置'''
-        return {}
+        spec_path = self.fileutils.get_raw_data_path(config_file= config_file, path= 'config')
+        spec_df = pd.read_excel(spec_path, dtype= object, sheet_name= 0, keep_default_na= False)
+        return spec_df.iloc[0].to_dict()
+        # return {}
     
-    @staticmethod
-    def get_exe_ls(config_file: str = 'whole_config.xlsx', target_sheet: str = '数据集执行控制') -> list[str]:
+    # @staticmethod
+    def get_exe_ls(self, config_file: str = 'whole_config.xlsx', target_sheet: str = '数据集执行控制') -> list[str]:
         ''' #NOTE 获取要执行的数据集列表'''
         # 这个可以读取另外一个配置文件,指定当前项目要执行哪些数据集
-        fileutils = FileUtils()
-        spec_path: str = fileutils.get_raw_data_path(config_file= config_file, path= 'config')
+        spec_path: str = self.fileutils.get_raw_data_path(config_file= config_file, path= 'config')
         spec_df = pd.read_excel(spec_path, dtype= object, sheet_name= target_sheet, keep_default_na= False)
         spec_df.fillna('', inplace= True)
         dataset_col = '数据集代号'
