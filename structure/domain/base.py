@@ -51,5 +51,5 @@ class DatasetHandler(ABC):
                 rename_map[row['来源表变量']] = row['重命名变量']
         return df.rename(columns= rename_map)
     
-    def _arrange_output(self, dm_table: pd.DataFrame, spec_df: pd.DataFrame) -> pd.DataFrame:
+    def _arrange_output(self, dm_table: pd.DataFrame) -> pd.DataFrame:
         ...

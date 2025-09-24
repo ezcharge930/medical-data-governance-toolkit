@@ -37,8 +37,8 @@ class DM(DatasetHandler):
         dm_table = self._process_core_table(raw_data= raw_data, config_df= config_df)
 
         # 读取规范数据
-        spec_df = datareader.read_spec_df()
-        final_dm = self._arrange_output(dm_table, spec_df)
+        # spec_df = datareader.read_spec_df()
+        final_dm = self._arrange_output(dm_table)
 
         return final_dm
     
@@ -105,10 +105,19 @@ class DM(DatasetHandler):
             return min(series)
         
     def _map_height_weight(self, series: pd.Series) -> float:
-        ...
+        mode_values = series.mode()
+        if len(mode_values) == 1:
+            return mode_values.iloc[0]
+        else:
+            return series.mean()
+        
+        
     def _calculate_bmi(self, weight: pd.Series, height: pd.Series) -> pd.Series:
         ''' 计算BMI '''
-        ...  
+        weight = pd.to_numeric(weight, errors= 'coerce')  
+        height = pd.to_numeric(height, errors= 'coerce')/ 100
+        bmi = weight / (height ** 2)
+        return bmi
         
         
 
