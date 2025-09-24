@@ -11,8 +11,8 @@ class DataReader(Protocol):
     def read_raw_df(self, table: str, where: str, source_path: str) -> pd.DataFrame:
         ...
         
-    def read_spec_df(self) -> pd.DataFrame:
-        ...
+    # def read_spec_df(self, domain: str, spec_file: str) -> pd.DataFrame:
+    #     ...
         
     def prepare_raw_data(self, config_file: str | None = None) -> dict[str, pd.DataFrame]:
         ...
@@ -40,8 +40,10 @@ class DataLoader:
     #     df = pd.DataFrame()
     #     return df
     
-    # def read_spec_df(self):
-    #     pass
+    # def read_spec_df(self, domain: str, spec_file: str):
+    #     ''' #NOTE 获取输出数据集说明书'''
+    #     spec_path = self.file_utils.get_raw_data_path(spec_file, path= 'config')
+        
         
     # def fetch_norm_table(self, norm: pd.DataFrame) -> pd.DataFrame:
     #     ds_id: str = norm['程序中数据集ID'].iloc[0]
@@ -131,10 +133,10 @@ class DataLoader:
         ...
     
     # 读取配置文件
-    def load_config(self, config_file: str) -> pd.DataFrame:
-        # NOTE 获取dm集配置文件所在地
-        config_path = self.file_utils.get_raw_data_path(config_file= config_file, path= 'config')
-        # config_path = structure/config/dm_rawdata_config.xlsx
-        config_df = pd.read_excel(config_path, dtype= object, keep_default_na= False).fillna('')
-        return config_df
+    # def load_config(self, config_file: str) -> pd.DataFrame:
+    #     # NOTE 获取dm集配置文件所在地
+    #     config_path = self.file_utils.get_raw_data_path(config_file= config_file, path= 'config')
+    #     # config_path = structure/config/dm_rawdata_config.xlsx
+    #     config_df = pd.read_excel(config_path, dtype= object, keep_default_na= False).fillna('')
+    #     return config_df
       

@@ -1,4 +1,6 @@
 import os
+import pandas as pd
+import datetime
 
 class FileUtils:
     def __init__(self, project_name: str|None = None) -> None:
@@ -57,6 +59,11 @@ class FileUtils:
     def read_csv_to_pd(self):
         pass
     
-    def save_df_by_timestamp(self):
-        pass
+    def save_df_by_timestamp(self, df: pd.DataFrame, prefix: str = 'output'):
+        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f'{prefix}_{timestamp}.csv'
+        filepath = os.path.join(self.structure_dir, 'output', filename)
+        os.makedirs(os.path.dirname(filepath), exist_ok= True)
+        df.to_csv(filepath, index= False,  encoding= 'utf-8')
+        print(f'已保存: {filepath}')
     

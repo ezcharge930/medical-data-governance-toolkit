@@ -1,11 +1,12 @@
-from ..utils.config_utils import ConfigUtils
+from structure.utils.config_service import ConfigurationService
 
 class TaskManager():
-    def __init__(self, config: ConfigUtils) -> None:
-        self.config = config
+    def __init__(self, config_service: ConfigurationService) -> None:
+        self.config_service = config_service
     
     def run_ds_multi_process(self):
-        tasks = self.config.get_exe_ls()
+        # tasks = self.config.get_exe_ls()
+        ...
     
     def process_main_task_ds(self):
         pass

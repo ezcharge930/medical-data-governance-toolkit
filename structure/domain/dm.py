@@ -3,11 +3,14 @@
 from typing import TYPE_CHECKING
 import pandas as pd
 # from stucture.data.raw_data import DataReady
-from structure.data.raw_data import DataLoader, DataReader
+from structure.data.raw_data import DataReader
 from structure.domain.base import DatasetHandler
+from structure.utils.config_service import ConfigurationService
+from structure.core.output_arrange import OutputArranger
 
 if TYPE_CHECKING:
-    from structure.data.raw_data import DataLoader
+    # from structure.data.raw_data import DataLoader
+    from pandas import DataFrame
 
 class DM(DatasetHandler):
     # def __init__(self) -> None:
@@ -16,7 +19,8 @@ class DM(DatasetHandler):
     def get_dataset_name(self) -> str:
         return 'dm'
     
-    def process(self, datareader: DataReader):
+    def process(self, datareader: DataReader, config_service: ConfigurationService):
+       
         # self.dataready = dataready
         # raw_data_store = datareader.prepare_raw_data(config_file= 'dm_rawdata_config.xlsx')
         # raw_data_store: dict[str, pd.DataFrame] = self.dataready.prepare_raw_data(config_file= 'dm_rawdata_config.xlsx')
@@ -26,19 +30,33 @@ class DM(DatasetHandler):
         # raw_data:dict = {}
         # for table_id in ['dm1', 'dm2', 'dm3']:
         #     table_config = config_df[config_df['程序中数据集ID'] == table_id].iloc[0]
+        # 0、获取全局配置
+        whole_config = config_service.get_whole_config()
+        print(f'全局配置: {whole_config}')
 
-        # 1、加载配置文件
-        config_df = datareader.load_config(config_file= 'dm_rawdata_config.xlsx')
+        # 1、加载DM专属配置文件
+        # config_df = datareader.load_config(config_file= 'dm_rawdata_config.xlsx')
+        # whole_config = ConfigUtils()
+        config_df = config_service.get_dataset_config('dm')
 
         # 2、读取原始数据
-        raw_data = self._load_raw_data(datareader= datareader, config_df= config_df)
+        raw_data = self._load_raw_data(datareader, config_df)
 
         # 3、核心加工
-        dm_table = self._process_core_table(raw_data= raw_data, config_df= config_df)
+        dm_table = self._process_core_table(raw_data, config_df)
 
-        # 读取规范数据
-        # spec_df = datareader.read_spec_df()
-        final_dm = self._arrange_output(dm_table)
+        # 4、读取数据说明书
+        spec_df: pd.DataFrame = config_service.get_specification(domain= 'DM')
+        
+        # 创建整理器
+        arranger = OutputArranger(
+            spec_columns= spec_df['变量名'].tolist(),
+            subjid_col= 'subjid',
+            clean_chars= ['\n', '@', '\r'],
+            add_timestamp= True
+        )
+        
+        final_dm = arranger.arrange(dm_table)
 
         return final_dm
     
@@ -68,13 +86,13 @@ class DM(DatasetHandler):
         # 患者数据聚合
         patient_df = self._map_patient_data(merge_df)
         
-        return pd.concat(all_dfs, ignore_index= True)
+        return patient_df
       
 
     def _map_patient_data(self, df: pd.DataFrame) -> pd.DataFrame:
         ''' 按患者聚合数据 '''
         # 确保列存在
-        required_cols = ['subjid', 'sex', 'brthdtc', 'height', 'weight']
+        required_cols: list = ['subjid', 'sex', 'brthdtc', 'height', 'weight']
         for col in required_cols:
             if col not in df.columns:
                 print(f'警告：缺少列: {col}')

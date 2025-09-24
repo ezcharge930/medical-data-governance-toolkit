@@ -1,17 +1,18 @@
 from abc import ABC, abstractmethod
 from structure.data.raw_data import DataLoader,DataReader
+from structure.utils.config_service import ConfigurationService
 import pandas as pd
 
 class DatasetHandler(ABC):
     @abstractmethod
-    def process(self, dataloader: DataLoader):
-        ''' 处理数据集'''
-        pass
+    def process(self, dataloader: DataLoader, config_service: ConfigurationService) -> pd.DataFrame:
+        ''' 处理数据集,接受配置服务以便获取全局或者数据集专属配置 '''
+        ...
     
     @abstractmethod
     def get_dataset_name(self) -> str:
         ''' 返回支持的数据集名,如'dm', 'sv'等'''
-        pass
+        ...
     
     def _process_core_table(self, raw_data: dict[str, pd.DataFrame], config_df: pd.DataFrame) -> pd.DataFrame:
         ...
@@ -26,7 +27,6 @@ class DatasetHandler(ABC):
             source_table = table_config['来源表']
             source_columns = table_config['来源表变量'].tolist()
             raw_data[table_id] = datareader.read_raw_table(source_table, source_columns)
-
         return raw_data  
 
             
@@ -51,5 +51,6 @@ class DatasetHandler(ABC):
                 rename_map[row['来源表变量']] = row['重命名变量']
         return df.rename(columns= rename_map)
     
-    def _arrange_output(self, dm_table: pd.DataFrame) -> pd.DataFrame:
-        ...
+    # def _arrange_output(self, dm_table: pd.DataFrame, spec_df: pd.DataFrame) -> pd.DataFrame:
+    #     # TODO: 根据 spec_df 调整输出列顺序、格式等
+    #     ...
