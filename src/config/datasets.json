@@ -1,0 +1,13 @@
+{
+  "supported_datasets": [
+    "dm",
+    "dg"
+  ],
+  "default_datasets": [
+    "dm"
+  ],
+  "dataset_description": {
+    "dm": "人口统计学",
+    "dg": "诊断信息"
+  }
+}
