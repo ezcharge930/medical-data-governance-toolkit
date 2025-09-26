@@ -51,6 +51,3 @@ class ConfigurationService:
         spec_df = spec_df.loc[(spec_df['数据集'] == domain) & (spec_df['输出标志'].str.lower() == 'y')]
 
         return spec_df
-    
-
-        
