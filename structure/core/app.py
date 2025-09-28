@@ -45,7 +45,7 @@ class Application:
         self.file_utils = FileUtils(project_name= self.project_name)
         self.db_utils = DBUtils()
         self.dataloader = DataLoader(self.file_utils, self.db_utils)
-        self.dataprocessor = DataProcessor(self.file_utils, self.db_utils, self.dataloader)
+        self.dataprocessor = DataProcessor(self.dataloader)
         # self.task_manager = TaskManager(self.config_service)
         # 注册DM集
         self.dataprocessor.register_handler(DM())

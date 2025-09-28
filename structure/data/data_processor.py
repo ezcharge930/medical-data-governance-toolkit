@@ -7,9 +7,9 @@ from structure.utils.config_service import ConfigurationService
 import pandas as pd
 
 class DataProcessor:
-    def __init__(self, file_utils: FileUtils, db_utils: DBUtils, dataloader:DataLoader) -> None:
-        self.file_utils = file_utils
-        self.db_utils = db_utils
+    def __init__(self,  dataloader:DataLoader) -> None:
+        # self.file_utils = file_utils
+        # self.db_utils = db_utils
         self.dataloader = dataloader
         self._handler: dict[str, DatasetHandler] = {}
         
@@ -54,4 +54,5 @@ class DataProcessor:
         
     
     def save_result(self, df:pd.DataFrame, dataset_name:str):
-        self.file_utils.save_df_by_timestamp(df, prefix= dataset_name)
+        file_utils = FileUtils()
+        file_utils.save_df_by_timestamp(df, prefix= dataset_name)
